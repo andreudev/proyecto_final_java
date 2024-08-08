@@ -3,25 +3,29 @@ public class Main {
         int width = 0, height = 0, generations = 0,speed = 0,
                 n=0;
         String population = "";
-        for(int i = 0; i < args.length; i++){
-            //w=10 h=20 g=100 s=300 p=”101#010#111” n=1
+
+        /*
+            w=10 h=20 g=100 s=300 p=”101#010#111” n=1
+            TODO: MODULAR EL CODIGO
+        */
+
+        for (String arg : args)
             try {
-                if(args[i].startsWith("w="))
-                    width = Integer.parseInt(args[i].substring(2));
-                else if(args[i].startsWith("h="))
-                    height = Integer.parseInt(args[i].substring(2));
-                else if(args[i].startsWith("g="))
-                    generations = Integer.parseInt(args[i].substring(2));
-                else if(args[i].startsWith("s="))
-                    speed = Integer.parseInt(args[i].substring(2));
-                else if(args[i].startsWith("p="))
-                    population = args[i].substring(2);
-                else if(args[i].startsWith("n="))
-                    n = Integer.parseInt(args[i].substring(2));
+                if (arg.startsWith("w="))
+                    width = Integer.parseInt(arg.substring(2));
+                else if (arg.startsWith("h="))
+                    height = Integer.parseInt(arg.substring(2));
+                else if (arg.startsWith("g="))
+                    generations = Integer.parseInt(arg.substring(2));
+                else if (arg.startsWith("s="))
+                    speed = Integer.parseInt(arg.substring(2));
+                else if (arg.startsWith("p="))
+                    population = arg.substring(2);
+                else if (arg.startsWith("n="))
+                    n = Integer.parseInt(arg.substring(2));
             } catch (NumberFormatException e) {
                 System.out.println("Error en el formato de los argumentos");
             }
-        }
         System.out.println(width==0 ? "width [Invalido] " :
                 "width = " + width + " ");
         System.out.println(height==0 ? "height [Invalido] " :
@@ -34,7 +38,27 @@ public class Main {
                 "population = " + population + " ");
         System.out.println(n==0 ? "n [Invalido] " :
                 "n = " + n + " ");
+        System.out.println("Matriz: ");
+        int[][] resultado = matriz(population);
 
-
+        for (int i = 0; i < resultado.length; i++) {
+            for (int j = 0; j < resultado[i].length; j++) {
+                System.out.print(resultado[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
+
+    public static int[][] matriz(String stringMatriz) {
+        String[] filas = stringMatriz.split("#");
+        int[][] matriz = new int[filas.length][filas.length];
+        for (int i = 0; i < filas.length; i++) {
+            char[] columnas = filas[i].toCharArray();
+            for (int j = 0; j < columnas.length; j++) {
+                matriz[i][j] = Character.getNumericValue(columnas[j]);
+            }
+        }
+        return matriz;
+    }
+
 }
