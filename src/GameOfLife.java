@@ -1,10 +1,10 @@
 import java.util.HashMap;
 
 public class GameOfLife {
-    private int width = 0;
-    private int height = 0;
-    private int generations = 0;
-    private int speed = 0;
+    private final int width;
+    private final int height;
+    private final int generations;
+    private final int speed;
     private int n=0;
     private String population = "";
 
