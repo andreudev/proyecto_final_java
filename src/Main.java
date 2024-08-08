@@ -7,7 +7,10 @@ public class Main {
         /*
             w=10 h=20 g=100 s=300 p=”101#010#111” n=1
             TODO: MODULAR EL CODIGO
+            TODO: VALIDAR LOS ARGUMENTOS
+            TODO: CREAR UNA MATRIZ CON LOS ARGUMENTOS
         */
+
 
         for (String arg : args)
             try {
@@ -39,26 +42,10 @@ public class Main {
         System.out.println(n==0 ? "n [Invalido] " :
                 "n = " + n + " ");
         System.out.println("Matriz: ");
-        int[][] resultado = matriz(population);
 
-        for (int i = 0; i < resultado.length; i++) {
-            for (int j = 0; j < resultado[i].length; j++) {
-                System.out.print(resultado[i][j] + " ");
-            }
-            System.out.println();
-        }
+        int[][] resultado = ArrayMatriz.matriz(population);
+        ArrayMatriz.imprimirMatriz(resultado);
     }
 
-    public static int[][] matriz(String stringMatriz) {
-        String[] filas = stringMatriz.split("#");
-        int[][] matriz = new int[filas.length][filas.length];
-        for (int i = 0; i < filas.length; i++) {
-            char[] columnas = filas[i].toCharArray();
-            for (int j = 0; j < columnas.length; j++) {
-                matriz[i][j] = Character.getNumericValue(columnas[j]);
-            }
-        }
-        return matriz;
-    }
 
 }
