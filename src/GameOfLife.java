@@ -6,7 +6,7 @@ public class GameOfLife {
     private final int generations;
     private final int speed;
     private int n=0;
-    private String population = "";
+    private final String population;
 
     public GameOfLife(String[] args) {
         HashMap<String, String> argumentos = ArrayMatriz.argumentos(args);
