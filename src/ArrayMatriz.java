@@ -11,9 +11,9 @@ public class ArrayMatriz {
         return argumentos;
     }
 
-    public static int[][] matriz(String stringMatriz) {
-        String[] filas = stringMatriz.split("#");
-        int[][] matriz = new int[filas.length][filas.length];
+    public static int[][] convMatriz(String stringMatriz, int height, int width) {
+        String[] filas = stringMatriz == null ? new String[0] : stringMatriz.split("#");
+        int[][] matriz = new int[height==-1?0:height][width==-1?0:width];
         for (int i = 0; i < filas.length; i++) {
             char[] columnas = filas[i].toCharArray();
             for (int j = 0; j < columnas.length; j++) {
@@ -22,6 +22,10 @@ public class ArrayMatriz {
         }
         return matriz;
     }
+
+
+
+
 
     public static void imprimirMatriz(int[][] matriz) {
         System.out.println("Matriz: ");
