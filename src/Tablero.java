@@ -1,21 +1,20 @@
-import java.util.HashMap;
+public class Tablero {
+    private int[][] matrizGOL;
 
-public class ArrayMatriz {
-
-    public static HashMap<String, String> argumentos(String[] args) {
-        HashMap<String, String> argumentos = new HashMap<>();
-        for (String arg : args) {
-            String[] argumento = arg.split("=");
-            argumentos.put(argumento[0], argumento[1]);
-        }
-        return argumentos;
+    public Tablero(String population, int height, int width) {
+        this.matrizGOL = convMatriz(population, height, width);
     }
 
-    public static int[][] convMatriz(String stringMatriz, int height, int width) {
+
+    private int[][] convMatriz(String stringMatriz, int height, int width) {
         String[] filas = stringMatriz == null ? new String[0] : stringMatriz.split("#");
         int[][] matriz = new int[height==-1?0:height][width==-1?0:width];
         for (int i = 0; i < filas.length; i++) {
             char[] columnas = filas[i].toCharArray();
+            if (columnas.length > width) {
+                System.out.println("La matriz no es valida");
+                return new int[0][0];
+            }
             for (int j = 0; j < columnas.length; j++) {
                 matriz[i][j] = Character.getNumericValue(columnas[j]);
             }
@@ -23,13 +22,9 @@ public class ArrayMatriz {
         return matriz;
     }
 
-
-
-
-
-    public static void imprimirMatriz(int[][] matriz) {
+    public void imprimirMatriz() {
         System.out.println("Matriz: ");
-        for (int[] ints : matriz) {
+        for (int[] ints : this.matrizGOL) {
             for (int anInt : ints) {
                 System.out.print(anInt + " ");
             }
