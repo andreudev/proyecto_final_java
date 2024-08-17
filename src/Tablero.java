@@ -9,6 +9,15 @@ public class Tablero {
 
     private int[][] convMatriz(String stringMatriz, int height, int width) {
         if ("rnd".equals(stringMatriz)) {
+
+            /* Genera una matriz aleatoria
+            Math.random() genera un numero aleatorio entre 0 y 1
+            Math.round() redondea el numero al entero mas cercano sea 0 o 1
+
+            El operador ternario se usa para verificar si height y width son -1
+            ya que estos valores serian invalidos y se asigna 0 en caso de ser invalidos
+            */
+
             int[][] matriz = new int[height==-1?0:height][width==-1?0:width];
             for (int i = 0; i < matriz.length; i++) {
                 for (int j = 0; j < matriz[i].length; j++) {
@@ -17,6 +26,11 @@ public class Tablero {
             }
             return matriz;
         } else {
+            /*
+            * Convierte el string de la matriz en una matriz de enteros
+            * Verifica el string si es null o si la matriz es valida en cuanto a su tamaño de filas y columnas
+            * Devuelve la matriz de enteros
+            */
         String[] filas = stringMatriz == null ? new String[0] : stringMatriz.split("#");
         int[][] matriz = new int[height==-1?0:height][width==-1?0:width];
         if (filas.length > height) {
@@ -37,6 +51,9 @@ public class Tablero {
         }
     }
 
+    /*
+    * Imprime la matriz en consola
+    */
     public void imprimirMatriz() {
         System.out.println("Matriz: ");
         for (int[] ints : this.matrizGOL) {
@@ -69,6 +86,11 @@ public class Tablero {
         this.matrizGOL = matrizAux;
     }
 
+
+    /*
+    * Crea una matriz de 3x3 con los vecinos de la celda i,j
+    * Si la celda esta en el borde de la matriz, se rellena con 0
+     */
     private int[][] vecinadrioCopiado(int i, int j) {
         int[][] vecinos = new int[3][3];
         for (int k = i - 1; k <= i + 1; k++) {
@@ -80,6 +102,25 @@ public class Tablero {
         }
         return vecinos;
     }
+
+
+
+    private int vecindario1(int i, int j) {
+        int vecinos = 0;
+        int[][] vecinosCopiados = vecinadrioCopiado(i, j);
+        for(int k=0;k<vecinosCopiados.length;k++){
+            for(int l=0;l<vecinosCopiados[k].length;l++){
+                if(k==l || k+l == vecinosCopiados.length-1){
+                    continue;
+                }
+                if(vecinosCopiados[k][l]==1){
+                    vecinos++;
+                }
+            }
+        }
+        return vecinos;
+    }
+
 
     private int vecindario3(int i, int j) {
         int vecinos = 0;
@@ -95,22 +136,4 @@ public class Tablero {
         return vecinos - this.matrizGOL[i][j];
     }
 
-    private int vecindario1(int i, int j) {
-        int vecinos = 0;
-        int[][] vecinosCopiados = vecinadrioCopiado(i, j);
-        for(int k=0;k<vecinosCopiados.length;k++){
-            for(int l=0;l<vecinosCopiados[k].length;l++){
-                if(k==l || k+l == vecinosCopiados.length-1){
-                    continue;
-                }
-                if(vecinosCopiados[k][l]==1){
-                    vecinos++;
-                }
-            }
-        }
-
-
-        return vecinos;
-
-    }
 }
