@@ -1,5 +1,9 @@
 import java.util.HashMap;
 
+// todo: Implementar un metodo que verifique que datos son necesarios para iniciar las generaciones
+// todo: Implementar un metodo que verifique que los datos sean validos (Hecho)
+
+
 public class GameOfLife {
     private final int width;
     private final int height;
@@ -33,7 +37,17 @@ public class GameOfLife {
     }
 
 
+    public Tablero getTablero() {
+        return tablero;
+    }
 
+    public int getGenerations() {
+        return generations;
+    }
+
+    public int getN() {
+        return n;
+    }
 
     public void mostrarInfo() {
         System.out.println(this.width==0 ? "Width=[No presente]" :this.width==-1?"Width=[Invalido]" : "width: " + this.width);

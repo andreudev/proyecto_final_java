@@ -19,7 +19,7 @@ public class VerificacionDatos {
             if (arg == null) {
                 return 0;
             } else if (!verificarDatoValido(arg, argName)) {
-                System.out.println("Numero no valido");
+                System.out.println("Number not valid");
                 return -1;
 
             }
