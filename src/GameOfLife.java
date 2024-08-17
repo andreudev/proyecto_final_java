@@ -49,6 +49,11 @@ public class GameOfLife {
         return n;
     }
 
+    public boolean readyToGo() {
+        return this.width != -1 && this.height != -1 && this.generations != -1 && this.speed != -1
+                && tablero.getMatrizGOL().length != 0;
+    }
+
     public void mostrarInfo() {
         System.out.println(this.width==0 ? "Width=[No presente]" :this.width==-1?"Width=[Invalido]" : "width: " + this.width);
         System.out.println(this.height==0 ? "Height=[No presente]" :this.height==-1?"Height=[Invalido]" : "height: " + this.height);

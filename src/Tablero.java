@@ -64,12 +64,23 @@ public class Tablero {
         }
     }
 
+    /*
+    * Retorna la matriz con las nuevas generaciones aplicando las reglas del GOL
+     */
+
     public void vecindario(int n) {
         int[][] matrizAux = new int[this.matrizGOL.length][this.matrizGOL[0].length];
         for (int i = 0; i < this.matrizGOL.length; i++) {
             for (int j = 0; j < this.matrizGOL[i].length; j++) {
                 // Toma en cuenta el valor de n para calcular el tipo de vecindario
-                int vecinos = n == 3 ? vecindario3(i, j) : vecindario1(i, j);
+                int vecinos = switch (n) {
+                    case 1 -> vecindario1(i, j);
+                    case 2 -> vecindario2(i, j);
+                    case 3 -> vecindario3(i, j);
+                    case 4 -> vecindario4(i, j);
+                    case 5 -> vecindario5(i, j);
+                    default -> 0;
+                };
                 // Reglas del GOL
                 if (this.matrizGOL[i][j] == 1) {
                     if (vecinos < 2 || vecinos > 3) {
@@ -88,8 +99,8 @@ public class Tablero {
 
 
     /*
-    * Crea una matriz de 3x3 con los vecinos de la celda i,j
-    * Si la celda esta en el borde de la matriz, se rellena con 0
+    * Devuelve una matriz de 3x3 con los vecinos de la celda i,j
+    * Si la celda esta en el borde de la matriz, se rellena con 0 los espacios vacios
      */
     private int[][] vecinadrioCopiado(int i, int j) {
         int[][] vecinos = new int[3][3];
@@ -110,7 +121,25 @@ public class Tablero {
         int[][] vecinosCopiados = vecinadrioCopiado(i, j);
         for(int k=0;k<vecinosCopiados.length;k++){
             for(int l=0;l<vecinosCopiados[k].length;l++){
+                // Omite las celdas diagonales y anti-diagonales segun el modelo de vecindario 1
                 if(k==l || k+l == vecinosCopiados.length-1){
+                    continue;
+                }
+                if(vecinosCopiados[k][l]==1){
+                    vecinos++;
+                }
+            }
+        }
+        return vecinos;
+    }
+
+    private int vecindario2(int i, int j) {
+        int vecinos = 0;
+        int[][] vecinosCopiados = vecinadrioCopiado(i, j);
+        for(int k=0;k<vecinosCopiados.length;k++){
+            for(int l=0;l<vecinosCopiados[k].length;l++){
+                //Omite anti-diagonales segun el modelo de vecindario 2
+                if(k+l == vecinosCopiados.length-1){
                     continue;
                 }
                 if(vecinosCopiados[k][l]==1){
@@ -127,13 +156,53 @@ public class Tablero {
         int[][] vecinosCopiados = vecinadrioCopiado(i, j);
 
         for (int[] vecino : vecinosCopiados) {
-            for (int i1 : vecino) {
-                if (i1 == 1) {
+            for (int l = 0; l < vecinosCopiados[0].length; l++) {
+                //Toma en cuenta solo las celdas diagonales segun el modelo de vecindario 3
+                if (vecino[l] == 1) {
                     vecinos++;
                 }
             }
         }
+        // Resta el valor de la celda actual para no contarla como vecino
         return vecinos - this.matrizGOL[i][j];
     }
 
+    private int vecindario4(int i, int j) {
+        int vecinos = 0;
+        int[][] vecinosCopiados = vecinadrioCopiado(i, j);
+        for(int k=0;k<vecinosCopiados.length;k++){
+            for(int l=0;l<vecinosCopiados[k].length;l++){
+                //Toma en cuenta solo las celdas diagonales segun el modelo de vecindario 4
+                if(k==l || k+l == vecinosCopiados.length-1){
+                    if(vecinosCopiados[k][l]==1){
+                        vecinos++;
+                    }
+                }
+            }
+        }
+        // Resta el valor de la celda actual para no contarla como vecino
+        return vecinos - this.matrizGOL[i][j];
+    }
+
+    private int vecindario5(int i, int j) {
+        int vecinos = 0;
+        int[][] vecinosCopiados = vecinadrioCopiado(i, j);
+        for(int k=0;k<vecinosCopiados.length;k++){
+            // Omitir la fila central segun el modelo de vecindario 5
+            if(k==1){
+                continue;
+            }
+            for(int l=0;l<vecinosCopiados[k].length;l++){
+                if(vecinosCopiados[k][l]==1){
+                    vecinos++;
+                }
+            }
+        }
+        return vecinos;
+    }
+
+
+    public int[][] getMatrizGOL() {
+        return matrizGOL;
+    }
 }
