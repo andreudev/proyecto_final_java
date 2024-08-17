@@ -1,11 +1,26 @@
-// todo: Implementar los 5 tipos de vecindarios que existen en el juego de la vida
+// todo: Implementar los 5 tipos de vecindarios que existen en el juego de la vida (Hecho)
 
 public class Tablero {
     private int[][] matrizGOL;
 
+    /**
+     * Constructor de la clase
+     * @param population String con la matriz
+     * @param height Altura de la matriz
+     * @param width Ancho de la matriz
+     */
+
     public Tablero(String population, int height, int width) {
         this.matrizGOL = convMatriz(population, height, width);
     }
+
+    /**
+     * Convierte el formato de String de la matriz en un arreglo de enteros
+     * @param stringMatriz String con la matriz
+     * @param height Altura de la matriz
+     * @param width Ancho de la matriz
+     * @return Matriz de enteros
+     */
 
     private int[][] convMatriz(String stringMatriz, int height, int width) {
         if ("rnd".equals(stringMatriz)) {
@@ -51,9 +66,9 @@ public class Tablero {
         }
     }
 
-    /*
-    * Imprime la matriz en consola
-    */
+    /**
+     * Imprime la matriz
+     */
     public void imprimirMatriz() {
         System.out.println("Matriz: ");
         for (int[] ints : this.matrizGOL) {
@@ -64,8 +79,9 @@ public class Tablero {
         }
     }
 
-    /*
-    * Retorna la matriz con las nuevas generaciones aplicando las reglas del GOL
+    /**
+     * Calcula el vecindario de la proxima generacion de la matriz
+     * @param n
      */
 
     public void vecindario(int n) {
@@ -98,10 +114,13 @@ public class Tablero {
     }
 
 
-    /*
-    * Devuelve una matriz de 3x3 con los vecinos de la celda i,j
-    * Si la celda esta en el borde de la matriz, se rellena con 0 los espacios vacios
+    /**
+     * Copia el vecindario de la celda actual
+     * @param i Fila de la celda
+     * @param j Columna de la celda
+     * @return Matriz de 3x3 con el vecindario de la celda
      */
+
     private int[][] vecinadrioCopiado(int i, int j) {
         int[][] vecinos = new int[3][3];
         for (int k = i - 1; k <= i + 1; k++) {
@@ -115,6 +134,12 @@ public class Tablero {
     }
 
 
+    /**
+     * Calcula el vecindario 1 de la celda actual
+     * @param i Fila de la celda
+     * @param j Columna de la celda
+     * @return Numero de vecinos
+     */
 
     private int vecindario1(int i, int j) {
         int vecinos = 0;
@@ -133,6 +158,13 @@ public class Tablero {
         return vecinos;
     }
 
+    /**
+     * Calcula el vecindario 2 de la celda actual
+     * @param i Fila de la celda
+     * @param j Columna de la celda
+     * @return Numero de vecinos
+     */
+
     private int vecindario2(int i, int j) {
         int vecinos = 0;
         int[][] vecinosCopiados = vecinadrioCopiado(i, j);
@@ -150,6 +182,12 @@ public class Tablero {
         return vecinos;
     }
 
+    /**
+     * Calcula el vecindario 3 de la celda actual
+     * @param i Fila de la celda
+     * @param j Columna de la celda
+     * @return Numero de vecinos
+     */
 
     private int vecindario3(int i, int j) {
         int vecinos = 0;
@@ -166,6 +204,13 @@ public class Tablero {
         // Resta el valor de la celda actual para no contarla como vecino
         return vecinos - this.matrizGOL[i][j];
     }
+
+    /**
+     * Calcula el vecindario 4 de la celda actual
+     * @param i Fila de la celda
+     * @param j Columna de la celda
+     * @return Numero de vecinos
+     */
 
     private int vecindario4(int i, int j) {
         int vecinos = 0;
@@ -184,6 +229,13 @@ public class Tablero {
         return vecinos - this.matrizGOL[i][j];
     }
 
+    /**
+     * Calcula el vecindario 5 de la celda actual
+     * @param i Fila de la celda
+     * @param j Columna de la celda
+     * @return Numero de vecinos
+     */
+
     private int vecindario5(int i, int j) {
         int vecinos = 0;
         int[][] vecinosCopiados = vecinadrioCopiado(i, j);
@@ -201,8 +253,28 @@ public class Tablero {
         return vecinos;
     }
 
+    /**
+     * Devuelve la matriz del juego de la vida
+     * @return Matriz del juego de la vida
+     */
 
     public int[][] getMatrizGOL() {
         return matrizGOL;
+    }
+
+    /**
+     * Verifica si la matriz esta extinta
+     * @return {@code true} si la matriz esta extinta, {@code false} si no esta extinta
+     */
+
+    public boolean isExtincto() {
+        for (int[] ints : this.matrizGOL) {
+            for (int anInt : ints) {
+                if (anInt == 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
